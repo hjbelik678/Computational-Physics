@@ -1,0 +1,30 @@
+function output = positions_diff_g(theta, initial_velocity, N, time_step)
+    b2_m = 4 * 10 ^ -5; %1/m
+    g = 9.81; %m/s^2
+
+    % velocity data, first column x, second column y
+    velocity = zeros(N, 2);
+
+    %position data, first column x, second column y
+    position = zeros(N, 2);
+
+    %define vix
+    velocity(1, 1) = initial_velocity * cosd(theta);
+
+    %define viy
+    velocity(1, 2) = initial_velocity * sind(theta);
+
+    for i = 1:N
+        %x position
+        position(i + 1, 1) = position(i, 1) + velocity(i, 1) * time_step;
+        %x velocity
+        velocity(i + 1, 1) = velocity(i, 1) - ((density_of_air(position(i, 2))) * b2_m * sqrt(velocity(i, 1) ^ 2 + velocity(i, 2) ^ 2) * velocity(i, 1)) * time_step;
+
+        %y position
+        position(i + 1, 2) = position(i, 2) + velocity(i, 2) * time_step;
+        %y velocity
+        velocity(i + 1, 2) = velocity(i, 2) + (-g - (density_of_air(position(i, 2)) * b2_m) * velocity(i, 2) * sqrt(velocity(i, 1) ^ 2 + velocity(i, 2) ^2)) * time_step;
+        
+    end
+    output = position;
+end

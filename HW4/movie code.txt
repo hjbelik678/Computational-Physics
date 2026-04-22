@@ -1,0 +1,31 @@
+
+% Assuming you have matrices x and y containing the positions of the pendulum
+
+% Create a movie
+writerObj = VideoWriter('pendulum_animation.mp4', 'MPEG-4');
+writerObj.FrameRate = 10;  % adjust frame rate if needed
+open(writerObj);
+
+% Animation
+figure;
+for i = 1:length(x)
+    plot(0, 0, 'ro', 'MarkerSize', 10);  % pivot point
+    hold on;
+    plot([0, x(i)], [0, y(i)], 'b', 'LineWidth', 2);  % pendulum rod
+    plot(x(i), y(i), 'bo', 'MarkerSize', 20);  % pendulum bob
+    xlim([-1.5*max(abs(x)) 1.5*max(abs(x))]);
+    ylim([-1.5*max(abs(y)) 1.5*max(abs(y))]);
+    title(['Pendulum Animation at Frame ', num2str(i)]);
+    xlabel('X Position (m)');
+    ylabel('Y Position (m)');
+    grid on;
+    hold off;
+    drawnow;
+    
+    % Capture frame for the movie
+    frame = getframe(gcf);
+    writeVideo(writerObj, frame);
+end
+
+% Close the movie file
+close(writerObj);

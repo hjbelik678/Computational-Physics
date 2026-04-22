@@ -1,0 +1,16 @@
+t = [0:0.1:0.7]'; %seconds
+R = 50; %Ohms
+q0 = 12; %Colombs
+L = 5; %Henri's
+C = 10^-4; % degrees farenheight
+e = 2.81;
+exponent = -R .* t / (2 * L);
+root = 
+Q = q0 * e ^ exponent * cos(sqrt((1/ (L .* C) -(R / (2 .* L))^2) .* t)); %charge in Colombs
+
+figure
+plot(t,Q);
+title('Plort t vs. Q')
+xlabel('time (s)')
+ylabel('charge (C)')
+grid
